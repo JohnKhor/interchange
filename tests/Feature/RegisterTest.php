@@ -32,6 +32,7 @@ class RegisterTest extends TestCase
         ]);
 
         $response->assertRedirect(route('home'))
+            ->assertSessionMissing('errors')
             ->assertSessionHas('success', 'You have successfully register as an user!');
 
         $this->assertAuthenticated();

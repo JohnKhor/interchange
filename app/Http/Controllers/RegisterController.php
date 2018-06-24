@@ -13,7 +13,7 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
     
-    public function index()
+    public function create()
     {
         return view('auth.register');
     }

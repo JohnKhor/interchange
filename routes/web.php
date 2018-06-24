@@ -13,5 +13,10 @@
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('/register', 'RegisterController@index')->name('register');
+Route::get('/register', 'RegisterController@create')->name('register');
 Route::post('/register', 'RegisterController@store')->name('register.store');
+
+Route::get('/login', 'LoginController@create')->name('login');
+Route::post('/login', 'LoginController@store')->name('login.store');
+
+Route::get('/logout', 'LoginController@destroy')->name('logout');
