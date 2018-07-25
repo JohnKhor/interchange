@@ -9,7 +9,7 @@ Home
 <div class="container">
     
     @if(session()->has('success'))
-        <div class="alert alert-success" role="alert">You have successfully register as an user!</div>
+        <div class="alert alert-success" role="alert">{{ session('success') }}</div>
     @endif
     
 </div>

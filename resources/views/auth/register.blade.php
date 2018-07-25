@@ -35,7 +35,9 @@ Register
             <label for="password_confirmation">Password Confirmation</label>
             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Password Confirmation">
         </div>
-        <input type="submit" class="btn btn-primary" value="Create an account"></input>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Create an account"></input>
+        </div>
     </form>     
 </div>
 
