@@ -2,16 +2,33 @@
 
 namespace Tests\Feature;
 
+use App\Question;
+use App\Answer;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AnswerTest extends TestCase
 {
+    use RefreshDatabase;
+    
     /** @test */
     public function it_can_show_all_answers_to_a_question()
     {
-        $this->assertTrue(true);
+        $question = factory(Question::class)->create();
+        $answerOne = factory(Answer::class)->create([
+            'question_id' => $question->id,
+        ]);
+        $answerTwo = factory(Answer::class)->create([
+            'question_id' => $question->id,
+        ]);
+
+        $response = $this->get(route('questions.show', ['question' => $question->title]));
+
+        $response->assertSee($answerOne->body)
+            ->assertSee($answerOne->user->username)
+            ->assertSee($answerTwo->body)
+            ->assertSee($answerTwo->user->username);
     }
 
     /** @test */
