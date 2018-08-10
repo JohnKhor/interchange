@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use App\Question;
 use App\Answer;
 use Tests\TestCase;
@@ -34,13 +35,43 @@ class AnswerTest extends TestCase
     /** @test */
     public function user_can_create_an_answer_to_a_question()
     {
-        $this->assertTrue(true);
+        $question = factory(Question::class)->create();
+        $answerer = factory(User::class)->create();
+        
+        $response = $this->actingAs($answerer)
+            ->post(route('answers.store'), [
+                'body' => "This is an answer to the question.",
+                'question_id' => $question->id,
+            ]);
+
+        $response->assertRedirect(route('questions.show', ['question' => $question->title]))
+            ->assertSessionHas('success', 'Answer has been successfully created.');
+        
+        $this->assertDatabaseHas('answers', [
+            'body' => "This is an answer to the question.",
+            'user_id' => $answerer->id,
+            'question_id' => $question->id,
+        ]);
     }
 
     /** @test */
     public function user_cannot_create_multiple_answers_to_the_same_question()
     {
-        $this->assertTrue(true);
+        $question = factory(Question::class)->create();
+        $answerer = factory(User::class)->create();
+        $answer = factory(Answer::class)->create([
+            'user_id' => $answerer->id,
+            'question_id' => $question->id,
+        ]);
+        
+        $response = $this->actingAs($answerer)
+            ->post(route('answers.store'), [
+                'body' => "This second answer by the same user shouldn't exist.",
+                'question_id' => $question->id,
+            ]);
+
+        $response->assertRedirect(route('questions.show', ['question' => $question->title]))
+            ->assertSessionHas('duplicate-answer', 'You have already answered this question.');
     }
 
     /** @test */

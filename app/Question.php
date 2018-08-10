@@ -24,4 +24,11 @@ class Question extends Model
     {
         return 'title';
     }
+
+    public function isAnswered()
+    {
+        return Answer::where('user_id', auth()->user()->id)
+            ->where('question_id', $this->id)
+            ->exists();
+    }
 }

@@ -39,3 +39,6 @@ Route::put('/questions/{question}', 'QuestionsController@update')->name('questio
 
 // Questions - Delete
 Route::delete('/questions/{question}', 'QuestionsController@destroy')->name('questions.destroy');
+
+// Answers - Create
+Route::post('/answers', 'AnswersController@store')->name('answers.store');
