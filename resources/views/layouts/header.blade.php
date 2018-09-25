@@ -8,6 +8,7 @@
             <a class="nav-item nav-link active" href="{{ route('home') }}">Home <span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" href="{{ route('questions') }}">Questions</a>
             @if (auth()->check())
+                <a class="nav-item nav-link" href="{{ route('questions.create') }}">Create Question</a>
                 <a class="nav-item nav-link" href="{{ route('logout') }}">Logout</a>
             @else
                 <a class="nav-item nav-link" href="{{ route('login') }}">Login</a>
